@@ -1,0 +1,39 @@
+spring:
+  mustache:
+    suffix: .html
+    prefix: classpath:templates/thymeleaf/
+    mode: HTML
+    cache: false
+    check-template-location: true
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jh
+    username: jh2
+    password: tkfkd12dl!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: NEVER
+
+
+#log ??
+logging:
+  level:
+    org:
+      springframework:
+        security=DEBUG:
+      hibernate:
+        SQL: debug
+        type:
+        descriptor:
+          sql : trace
