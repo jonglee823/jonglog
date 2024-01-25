@@ -24,8 +24,8 @@ public class Post {
     @Lob
     private String content;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
     private User user;
 
     @OneToMany(mappedBy ="post")

@@ -7,6 +7,7 @@ import com.jh2.jonglog.exception.UserNotFound;
 import com.jh2.jonglog.repository.PostRepository;
 import com.jh2.jonglog.repository.UserRepository;
 import com.jh2.jonglog.request.PostRequest;
+import com.jh2.jonglog.request.PostSearch;
 import com.jh2.jonglog.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +54,7 @@ public class PostService {
     }
 
     public PostResponse getPost(Long postId){
-        Post findPost = postRepository.findById(postId)
+        Post findPost = Optional.ofNullable(postRepository.getPost(postId))
                 .orElseThrow(PostNotFound::new);
 
         return new PostResponse(findPost);

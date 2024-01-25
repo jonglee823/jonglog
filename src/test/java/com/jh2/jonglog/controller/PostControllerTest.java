@@ -1,6 +1,7 @@
 package com.jh2.jonglog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jh2.jonglog.domain.Post;
 import com.jh2.jonglog.domain.User;
 import com.jh2.jonglog.repository.PostRepository;
 import com.jh2.jonglog.repository.UserRepository;
@@ -15,15 +16,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = {"local"})
 class PostControllerTest {
 
     @Autowired
@@ -46,6 +49,7 @@ class PostControllerTest {
         userRepository.deleteAll();
         postRepository.deleteAll();
     }
+
     @Test
     @DisplayName("(정상) 게시글 등록")
     @Transactional(readOnly = false)
@@ -73,8 +77,35 @@ class PostControllerTest {
                     )
                 .andExpect(status().isOk())
                 .andDo(print());
+    }
 
+    @Test
+    @DisplayName("(정상) 특정 ID 조회")
+    @Transactional(readOnly = false)
+    void getPost() throws Exception{
 
+        User user = User.builder()
+                .email("jh2@kakao.com")
+                .name("이종혁")
+                .password("tkfkd12dl!")
+                .build();
+
+        userRepository.save(user);
+
+        Post post = Post.builder()
+                .title("테스트 제목")
+                .content("테스트 내용")
+                .user(user)
+                .build();
+
+        postRepository.save(post);
+
+        mockMvc.perform(get("/posts/{postId}", post.getId())
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(post.getId()))
+                .andExpect(jsonPath("$.title").value(post.getTitle()))
+                .andDo(print());
     }
 
     @Test
