@@ -6,8 +6,8 @@ import com.jh2.jonglog.exception.PostNotFound;
 import com.jh2.jonglog.exception.UserNotFound;
 import com.jh2.jonglog.repository.PostRepository;
 import com.jh2.jonglog.repository.UserRepository;
+import com.jh2.jonglog.request.PostEdit;
 import com.jh2.jonglog.request.PostRequest;
-import com.jh2.jonglog.request.PostSearch;
 import com.jh2.jonglog.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +30,7 @@ public class PostService {
 
     /**
      * 게시글 전체 리턴
+     * Post.deleteYn이 false인 값만 리턴
      * @return List<PostResponse>
      */
     public List<PostResponse> postList(){
@@ -38,6 +39,10 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 게시글 등록
+     * @param postRequest
+     */
     @Transactional(readOnly = false)
     public void create(PostRequest postRequest){
 
@@ -46,13 +51,18 @@ public class PostService {
 
         Post post = Post.builder()
                 .title(postRequest.getTitle())
-                .content(postRequest.getContents())
+                .content(postRequest.getContent())
                 .user(user)
                 .build();
 
         postRepository.save(post);
     }
 
+    /**
+     * 특정 게시글 리턴
+     * Post.deleteYn이 false인 값만 리턴
+     * @return List<PostResponse>
+     */
     public PostResponse getPost(Long postId){
         Post findPost = Optional.ofNullable(postRepository.getPost(postId))
                 .orElseThrow(PostNotFound::new);
@@ -60,6 +70,10 @@ public class PostService {
         return new PostResponse(findPost);
     }
 
+    /**
+     * 게시글 삭제
+     * @param postId
+     */
     @Transactional(readOnly = false)
     public void remove(Long postId){
         Post findPost = postRepository.findById(postId)
@@ -68,4 +82,16 @@ public class PostService {
         findPost.delete();
     }
 
+    /**
+     * 게시글 수정기능
+     * @param postId
+     * @param postEdit
+     */
+    @Transactional(readOnly = false)
+    public void updatePost(Long postId, PostEdit postEdit){
+        Post findPost = postRepository.findById((postId))
+                .orElseThrow(PostNotFound::new);
+
+        findPost.update(postEdit);
+    }
 }

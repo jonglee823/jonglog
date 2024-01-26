@@ -20,4 +20,8 @@ public class ErrorResponse {
         this.message = message;
         this.validation = validation;
     }
+
+    public void addValidation(String fieldId, String fieldMessage){
+        validation.put(fieldId, fieldMessage);
+    }
 }

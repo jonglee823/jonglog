@@ -1,6 +1,5 @@
 package com.jh2.jonglog.request;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -21,7 +20,7 @@ public class PostRequest {
     private String title;
 
     @NotBlank(message = "내용을 입력해 주세요.")
-    private String contents;
+    private String content;
 
 //    @Length(min=6, max=20, message = "비밀번호는 6~20 자리로 입력해 주세요.")
 //    private String password;
@@ -34,7 +33,7 @@ public class PostRequest {
     @Builder
     public PostRequest(String title, String contents, LocalDateTime createTime, Long userId) {
         this.title = title;
-        this.contents = contents;
+        this.content = contents;
         this.createTime = createTime;
         this.userId = userId;
     }

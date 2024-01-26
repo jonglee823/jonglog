@@ -1,5 +1,6 @@
 package com.jh2.jonglog.domain;
 
+import com.jh2.jonglog.request.PostEdit;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -51,6 +52,9 @@ public class Post {
         this.createTime = createTime;
     }
 
+
+
+
     public Long getUserId(){
         return this.user.getId();
     }
@@ -67,5 +71,13 @@ public class Post {
 
     public void delete(){
         this.deleteYn = true;
+    }
+
+    /**
+     * 게시글 수정을 위한 수정 메서드
+     */
+    public void update(PostEdit postEdit){
+        this.title = postEdit.getTitle() == null? this.title : postEdit.getTitle();
+        this.content = postEdit.getContent() == null? this.content : postEdit.getContent();
     }
 }

@@ -1,0 +1,13 @@
+
+###게시글 조회
+GET http://localhost:8080/posts/1
+
+
+###게시글 수정
+PATCH http://localhost:8080/posts/1
+Content-Type: application/json
+
+{
+  "title" : "제목"
+  ,"content" : "내용"
+}
