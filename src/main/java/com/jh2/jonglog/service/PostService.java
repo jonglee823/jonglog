@@ -8,6 +8,7 @@ import com.jh2.jonglog.repository.PostRepository;
 import com.jh2.jonglog.repository.UserRepository;
 import com.jh2.jonglog.request.PostEdit;
 import com.jh2.jonglog.request.PostRequest;
+import com.jh2.jonglog.request.PostSearch;
 import com.jh2.jonglog.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,11 @@ public class PostService {
     private final UserRepository userRepository;
 
     /**
-     * 게시글 전체 리턴
+     * 게시글 전체 조회
      * Post.deleteYn이 false인 값만 리턴
      * @return List<PostResponse>
      */
-    public List<PostResponse> postList(){
+    public List<PostResponse> postList(PostSearch postSearch){
         return postRepository.findAll().stream()
                 .map(post -> new PostResponse(post))
                 .collect(Collectors.toList());
@@ -46,8 +47,10 @@ public class PostService {
     @Transactional(readOnly = false)
     public void create(PostRequest postRequest){
 
-        User user = userRepository.findById(postRequest.getUserId())
-                                    .orElseThrow(UserNotFound::new);
+//        User user = userRepository.findById(postRequest.getUserId())
+//                                    .orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(1L)
+                                  .orElseThrow(UserNotFound::new);
 
         Post post = Post.builder()
                 .title(postRequest.getTitle())
@@ -83,7 +86,7 @@ public class PostService {
     }
 
     /**
-     * 게시글 수정기능
+     * 게시글 수정
      * @param postId
      * @param postEdit
      */

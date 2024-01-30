@@ -17,7 +17,7 @@ public class PostResponse {
 
     private String title;
 
-    private String contents;
+    private String content;
 
     private boolean deleteYn;
 
@@ -28,7 +28,7 @@ public class PostResponse {
     public PostResponse(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
-        this.contents = post.getContent();
+        this.content = post.getContent();
         this.deleteYn = post.isDeleteYn();
         this.createTime = post.getCreateTime();
         this.updateTime = post.getUpdateTime();

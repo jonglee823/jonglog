@@ -2,6 +2,7 @@ package com.jh2.jonglog.controller;
 
 import com.jh2.jonglog.request.PostEdit;
 import com.jh2.jonglog.request.PostRequest;
+import com.jh2.jonglog.request.PostSearch;
 import com.jh2.jonglog.response.PostResponse;
 import com.jh2.jonglog.service.PostService;
 import jakarta.validation.Valid;
@@ -27,8 +28,9 @@ public class PostController {
      * @return
      */
     @GetMapping(value = "/posts")
-    public List<PostResponse> getPostList(){
-        return postService.postList();
+    public List<PostResponse> getPostList(@Valid PostSearch postSearch){
+        log.info(postSearch.toString());
+        return postService.postList(postSearch);
     }
 
     /**

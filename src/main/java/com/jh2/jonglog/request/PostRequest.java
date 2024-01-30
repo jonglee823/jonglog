@@ -27,14 +27,10 @@ public class PostRequest {
 
     private LocalDateTime createTime;
 
-    @NotNull(message = "회원 ID가 NULL 입니다.")
-    private Long userId;
-
     @Builder
     public PostRequest(String title, String contents, LocalDateTime createTime, Long userId) {
         this.title = title;
         this.content = contents;
         this.createTime = createTime;
-        this.userId = userId;
     }
 }
