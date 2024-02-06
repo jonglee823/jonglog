@@ -30,10 +30,12 @@ JPA 실습을 위한 포트폴리오 repo입니다.
 | 게시글 삭제    | POST    | /posts/delete/{postId} | 게시글 삭제              | ☑️    | Soft Delete |
 
 ### TODO LIST
-- 임시 저장
 - 검색기능 + 페이지네이션
 - 카테고리 출력
+- 답글 조회 & 등록 & 수정 & 삭제
+- 답글 비밀번호 암호화
 - longin check
+- 임시 저장
 
 
 ## 프로젝트 구조

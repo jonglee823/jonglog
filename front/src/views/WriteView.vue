@@ -12,12 +12,12 @@ const write= function (){
     title: title.value
     , content: content.value
   })
-
   .then(function (response) {
       router.replace({name:"home"})
   })
   .catch(function (error) {
-    console.log(error);
+    console.log(error)
+    alert(error.response.data.message);
   });
 }
 

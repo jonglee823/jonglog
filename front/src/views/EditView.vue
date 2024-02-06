@@ -22,10 +22,11 @@ axios.get(`/api/posts/${props.postId}`)
     })
     .catch((error) => {
       console.log(error)
+      alert(error.response.data.message);
     })
-    .finally(function () {
-      console.log("complete")
-    });
+    // .finally(function () {
+    //   console.log("complete")
+    // });
 
 const edit = ()=>{
   axios.patch(`/api/posts/${props.postId}`, post.value)

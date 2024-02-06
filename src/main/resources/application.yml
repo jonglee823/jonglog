@@ -1,10 +1,10 @@
 spring:
   # DB ?? ??
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/jh
+    url: jdbc:mariadb://localhost:3306/jh
     username: jh2
     password: tkfkd12dl!
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
 
   session:
     jdbc:

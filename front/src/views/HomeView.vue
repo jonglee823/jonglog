@@ -6,18 +6,43 @@ import {useRouter} from "vue-router";
 
 const posts= ref([]);
 const router = useRouter();
+const total = ref();
 
-axios.get('/api/posts?page=1&size=10')
-    .then((responce) => {
-      console.log(responce.data)
-      responce.data.forEach((r: any) =>{
-        posts.value.push(r);
-      });
-    })
-    .catch((error) => {
-      console.log(error)
+const currentPage = ref(1);
+const per_page = ref(5)
+
+const pageSize = ref(10)
+
+
+function search(){
+  const url = '/api/posts';
+  axios.get(url, {
+    params:{
+      page: currentPage.value
+      ,size: pageSize.value
+    }
+  })
+  .then((responce) => {
+    posts.value = [];
+    responce.data.forEach((r: any) =>{
+      posts.value.push(r);
     });
+    total: responce.data.length;
 
+  })
+  .catch((error) => {
+    console.log(error)
+  });
+}
+
+const handleSizeChange = (val: number) => {
+  pageSize.value = val
+  search()
+}
+const handleCurrentChange = (val: number) => {
+  currentPage.value = val
+  search()
+}
 </script>
 
 
@@ -35,7 +60,14 @@ axios.get('/api/posts?page=1&size=10')
   </ul>
 
   <div class="example-pagination-block">
-    <el-pagination background layout="prev, pager, next" :total="1000" />
+    <el-pagination  background layout="prev, sizes, pager, next"
+                    v-model:current-page="currentPage"
+                    v-model:page-size="pageSize"
+                    :page-sizes="[10, 20, 30, 40, 50]"
+                    :total="posts.length"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+    />
   </div>
 
   <div class="button">
